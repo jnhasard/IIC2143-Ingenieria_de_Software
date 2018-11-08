@@ -1,0 +1,23 @@
+<%= form_for([@forum,@publication]) do |t| %>
+  <% if @publication.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@publication.errors.count, "error") %> prohibited this publication from being saved:</h2>
+    <% @publication.errors.full_messages.each do |msg| %>  <!-- cuando no se puede guardar el foro se guarda un metodo errors-->
+      <div class="be-blue white top-space">
+        * <%= msg %>
+      </div>
+    <%end%>
+  <% end %>
+  
+  <div class="field">
+    <%= t.text_field :title, placeholder: "Título", class:"form-control" %>
+  </div>
+  <div class="field">
+    <%= t.text_area :body, placeholder: "Escribe tu publicación", style:"height:150px;", class:"form-control" %>
+  </div>
+  <div class="field" style="text-align:right">
+    <%= t.submit "Guardar", class:"btn be-blue white" %>
+  </div>
+<%end%>
+
+<!-- link_to 'Atras', publications_path -->

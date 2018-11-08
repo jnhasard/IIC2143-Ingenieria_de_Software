@@ -1,0 +1,78 @@
+<head>
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    text-align: center;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-header text-center">
+      <h1>Comentarios en <%= @publication.title %></h1>
+    </div>
+    <br>
+    <div class="btn-group" style="float:right">
+      <button type="button" class="btn btn-primary">
+        <%= link_to "Comentar", new_forum_publication_comment_path, {:style=>'color:#FFFFFF;', :class => "css_class"} %>
+      </button>
+      <button type="button" class="btn btn-primary">
+        <%= link_to "Atrás", forum_path(@forum), {:style=>'color:#FFFFFF;', :class => "css_class"}%>
+      </button>
+    </div>
+    <br><br><br><br>
+    <table>
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Contenido</th>
+          <th>Acciones</th>
+          <th>Reaccion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @publication.comments.each do |comment| %>
+          <tr style="text-align:center">
+            <td><%= comment.user.username %></td>
+            <td><%= comment.body %></td>
+            <td width="180px">
+              <% if can? :manage, comment %>
+                <%= link_to 'Editar', edit_forum_publication_comment_path(@forum, @publication, comment), class: "red" %>
+              <% end %>
+              -
+              <% if can? :manage, comment %>
+                <%= link_to 'Eliminar', forum_publication_comment_path(@forum, @publication, comment), method: :delete, class: "red" %>
+              <% end %>
+            </td>
+            <td width="200px">
+              <button type="button" class="btn btn-primary" style="float: center;">
+                <%=link_to like_forum_publication_comment_path(@forum, @publication, comment), {:style=>'color:#FFFFFF;', :class => "css_class", method: :put} do %>
+                  Like
+                  <%= comment.get_upvotes.size %>
+                <% end %>
+              </button>
+              <button type="button" class="btn btn-primary" style="float: center;">
+                <%=link_to unlike_forum_publication_comment_path(@forum, @publication, comment), {:style=>'color:#FFFFFF;', :class => "css_class", method: :put} do %>
+                  Unlike
+                  <%= comment.get_downvotes.size %>
+                <% end %>
+              </button>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</body>

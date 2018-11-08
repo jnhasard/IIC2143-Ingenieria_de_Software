@@ -1,0 +1,16 @@
+<%= form_for(@forum) do |f| %>
+	<% @forum.errors.full_messages.each do |msg| %>  <!-- cuando no se puede guardar el foro se guarda un metodo errors-->
+		<div class="be-blue white top-space">
+			* <%= msg %>
+		</div>
+	<%end%>
+	<div class="field">
+		<%= f.text_field :title, placeholder: "Título", class:"form-control" %>
+	</div>
+	<div class="field">
+		<%= f.text_area :body, placeholder: "Describe el foro", style:"height:250px;", class:"form-control" %>
+	</div>
+	<div class="field">
+		<%= f.submit "Guardar", class:"btn be-blue white" %>
+	</div>
+<%end%>

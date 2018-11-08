@@ -1,0 +1,35 @@
+<h1>Editar publicacion</h1>
+
+<%= form_with(model: @publicacion, local: true) do |form| %>
+
+  <% if @publicacion.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@publicacion.errors.count, "error") %> prohibited
+        this article from being saved:
+      </h2>
+      <ul>
+        <% @article.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </p>
+
+  <p>
+    <%= form.label :text %><br>
+    <%= form.text_area :text %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+
+<% end %>
+
+<%= link_to 'Atras', articles_path %>

@@ -1,0 +1,30 @@
+<body>
+  <div class="container">
+    <p>
+      <strong>Titulo:</strong>
+      <%= @publication.title %>
+    </p>
+    <p>
+      <strong>Contenido:</strong>
+      <%= @publication.body %>
+    </p>
+    <% unless @publication.user.nil? %>
+    <p>
+      <strong>Escrito por:</strong>
+      <%= @publication.user.email %>
+    </p>
+    <p>
+      <strong>Número de visitas:</strong>
+      <%= @publication.visits_count %>
+    </p>
+    <div class="field">
+    	<h3>Comentarios</h3>
+    	<%= render "comments/form" %>
+      <ul>
+        <% @publication.comments.each do |comment| %>
+        <%end%>
+      </ul>
+    </div>
+    <%end%>
+  </div>
+</body>

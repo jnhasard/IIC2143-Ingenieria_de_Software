@@ -1,0 +1,54 @@
+<style>
+.form-control {
+  width: 100%;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-search-strong-128.png');
+  background-repeat: no-repeat;
+	background-size: contain;
+  padding: 12px 20px 12px 40px;
+}
+</style>
+<body>
+<div class="container">
+  <div class="page-header text-center">
+    <h1 style="letter-spacing: 10px; font-size: 80px;">Foros</h1>
+  </div>
+	<div class ="col" style="text-align: left;">
+		<%= form_tag forums_path, :method => 'get' do %>
+			<%= text_field_tag :search, params[:search] , class: 'form-control' ,placeholder:"Buscar..."%>
+		<% end %>
+	</div>
+	<br>
+	<% if can? :manage, Forum %>
+	<button type="button" class="btn btn-primary" style="float: right;">
+			<%= link_to 'Nuevo foro', new_forum_path, {:style=>'color:#FFFFFF;', :class => "css_class"} %>
+	</button>
+	<% end %>
+		<% @forums.each do |forum| %>
+			<h1><%= link_to forum.title, forum %></h1>
+      <div class="btn-group" style="float: right;">
+				<% if user_signed_in? %>
+					<button type="button" class="btn btn-primary">
+            Suscríbete
+          </button>
+          <button type="button" class="btn btn-primary">
+            Desuscríbete
+          </button>
+				<% end %>
+      </div>
+			<%= forum.body %>
+			<br>
+			<br>
+			<div class="btn-group">
+			<% if can? :manage, Forum %>
+				<button type="button" class="btn btn-primary"><%= link_to "Editar", edit_forum_path(forum), {:style=>'color:#FFFFFF;', :class => "css_class"} %></button>
+				<button type="button" class="btn btn-primary"><%= link_to "Eliminar", forum, {:style=>'color:#FFFFFF;', :class => "css_class", method: :delete} %></button>
+			<% end %><br><br>
+		  </div>
+		<%end%>
+</div>
+</body>

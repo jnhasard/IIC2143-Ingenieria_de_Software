@@ -1,0 +1,75 @@
+<style>
+</style>
+<body>
+	<div class="container">
+		<div class="page-header text-left">
+	    <h1 style="letter-spacing: 10px; font-size: 80px; text-align:center;"><%= @forum.title %></h1>
+			<div style="float: right;">
+				<p style="text-align: right">
+					Visitas: <%= @forum.visits_count %>
+				<p/>
+				<% if can? :manage, Forum %>
+					<button type="button" class="btn btn-primary">
+						<%= link_to "Editar", edit_forum_path(@forum), {:style=>'color:#FFFFFF;', :class => "css_class"} %>
+					</button>
+				<% end %>
+				<button type="button" class="btn btn-primary align-right">
+					<%= link_to "Atrás", "/forums", {:style=>'color:#FFFFFF;', :class => "css_class"}%>
+				</button>
+			</div>
+			<div>
+				<h3><%= @forum.body %></h3>
+			</div>
+			<br>
+			<div class ="col" style="text-align: left;">
+				<%= form_tag forums_path, :method => 'get' do %>
+					<%= text_field_tag :search, params[:search] , class: 'form-control' ,placeholder:"Buscar..."%>
+				<% end %>
+			</div>
+	  </div>
+		<div class="col-sm-9">
+			<h2>Publicaciones<h2>
+			<ul>
+				<% @publicaciones_foro.each do |publication|%>
+					<li>
+						<h2><%= link_to publication.title, forum_publication_comments_path(@forum, publication), {:style=>'color:#00000F;', :class => "css_class"}%></h2>
+						<p><font size="4.5"><%= publication.body %></font></p>
+						<div class="btn-group" style="align-items:right">
+							<% if can? :update, publication %>
+							<button type="button" class="btn btn-primary">
+								<%= link_to "Editar", edit_forum_publication_path(@forum, publication), {:style=>'color:#FFFFFF;', :class => "css_class"} %>
+							</button>
+							<% end %>
+							<% if can? :delete, publication %>
+							<button type="button" class="btn btn-primary">
+								<%= link_to "Eliminar", forum_publication_path(@forum, publication), {:style=>'color:#FFFFFF;', :class => "css_class", method: :delete} %>
+							</button>
+							<% end %>
+						</div>
+						<p style="text-align:right"><font size="3">Publicado por: <%= publication.user.email %></font></p>
+						<p style="text-align:right"><font size="3"><%=link_to like_forum_publication_path(@forum, publication), method: :put do %>
+		      				Like
+		      				<%= publication.get_upvotes.size %>
+		    		<% end %>
+	    			<%=link_to unlike_forum_publication_path(@forum, publication), method: :put do %>
+	      				Unlike
+	      			<%= publication.get_downvotes.size %>
+	    			<% end %>
+						</font>
+						</p>
+					</li>
+				<%end%>
+			</ul>
+		</div>
+		<div class="col-sm-3">
+			<div class="field">
+				<% if user_signed_in? %>
+					<%= render "publications/form" %>
+				<% end %>
+			</div>
+		</div>
+		</div>
+	</div>
+</body>
+
+<!-- unless @forum.user.nil? Escrito por: @forum.user.email -->

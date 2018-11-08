@@ -1,0 +1,20 @@
+<h1>Publicaciones</h1>
+
+<%= link_to 'Nueva publicacion', new_publicacion_path %>
+
+<table>
+  <tr>
+    <th>Titulo</th>
+    <th>Contenido</th>
+    <th colspan="2"></th>
+  </tr>
+
+  <% @publicaciones.each do |publicacion| %>
+    <tr>
+      <td><%= publicacion.title %></td>
+      <td><%= publicacion.text %></td>
+      <td><%= link_to 'Mostrar', publicacion_path(publicacion) %></td>
+      <td><%= link_to 'Editar', edit_publicacion_path(publicacion) %></td>
+    </tr>
+  <% end %>
+</table>

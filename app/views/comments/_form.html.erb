@@ -1,0 +1,23 @@
+<%= form_for([@forum,@publication,@comment]) do |form| %>
+  <% if @comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+      <% @comment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.text_area :body, id: :comment_body, style:"height:150px;", class:"form-control"%>
+  </div>
+
+  <div class="field">
+    <%= form.submit "Guardar", class:"btn be-blue white"%>
+  </div>
+  <%= link_to "atrás", forum_publication_comments_path(@forum, @publication) %>
+<% end %>
+<!-- class="actions" -->

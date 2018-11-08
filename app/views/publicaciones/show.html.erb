@@ -1,0 +1,11 @@
+<p>
+  <strong>Titulo:</strong>
+  <%= @publicacion.title %>
+</p>
+
+<p>
+  <strong>Contenido:</strong>
+  <%= @publicacion.text %>
+</p>
+<%= link_to 'Editar', edit_publicacion_path(@publicacion) %> |
+<%= link_to 'Atras', publicaciones_path %>

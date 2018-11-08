@@ -1,0 +1,87 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+.sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+.row.content {
+	height: inherit;
+	float: none;
+}
+body {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+	}
+.container-fluid {
+	height: inherit;
+}
+</style>
+<body>
+<div class="container">
+	<div class="page-header text-center">
+    <h1 style="letter-spacing: 30px; font-size: 80px;">
+			DeTodo
+		</h1>
+  </div>
+</div>
+<div class="container-fluid">
+    <% if user_signed_in? %>
+  	  <div class="col-md-2 sidenav text-center">
+  	    <h2>Bienvenido <dt><%= current_user.username%></dt></h2><br>
+  			<h4>Reputación: <%= current_user.popularity %></h4>
+  			<div class="box">
+  				<%= image_tag(current_user.avatar) %>
+          <% if current_user.tipo >= 3 %>
+    				<h3 class="text-left">Eres administrador!</h3>
+          <% end %>
+          <br><br>
+  				<ul class="nav nav-pills nav-stacked">
+  	        <li class="active">
+              <a href="/forums/new"> Nuevo Foro </a>
+            </li>
+          </ul>
+  		  </div><br>
+      </div>
+  		<div class="col-md-8">
+  			<h1>Tus Foros</h1>
+
+  		</div>
+      <div class="col-md-2 sidenav" style="overflow-y:scroll;">
+        <h2 style="text-align:center;">
+  				Tweets Populares
+  			</h1><br>
+        <% if user_signed_in? %>
+    			<% current_user.tweet_trends_city.each do |tweet|%>
+    				<% tweet["trends"].each do |t| %>
+              <% if t["name"].starts_with?("\#") %>
+    					     <%= link_to t["name"], t["url"], {:style=>'color:#3366BB;', :class => "css_class"}%></a><br><br>
+              <% else %>
+                <%= link_to "\#"+t["name"], t["url"], {:style=>'color:#3366BB;', :class => "css_class"}%></a><br><br>
+              <%end%>
+    				<% end %>
+    			<% end %>
+        <% end %>
+      </div>
+  <% else %>
+
+    <div class="col-md-12 sidenav text-center">
+      <br><br>
+      <h2>Bienvenido!</h2>
+      <br><br><br><br>
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active">
+          <a href="/users/sign_up"> Crear Cuenta </a>
+        </li>
+        <br><br><br>
+        <li class="active">
+          <a href="/users/sign_in"> Iniciar Sesión </a>
+        </li>
+      </ul>
+    </div>
+  <% end %>
+</div>
+</body>

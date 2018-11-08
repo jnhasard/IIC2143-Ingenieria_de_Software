@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  publication: one
+  body: MyText
+  visits_count: 1
+
+two:
+  user: two
+  publication: two
+  body: MyText
+  visits_count: 1
